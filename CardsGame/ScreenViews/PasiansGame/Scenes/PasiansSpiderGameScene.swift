@@ -102,7 +102,7 @@ class PasiansSpiderGameScene: SKScene {
             rankName = rankDataDesc[rank] ?? ""
         }
         let suitName = suitDataDesc[suit.rawValue] ?? ""
-        let allCardName = "\(suitName)_\(rankName)_white"
+        let allCardName = "\(suitName)_\(rankName)_\(UserDefaults.standard.string(forKey: "cards_skin") ?? "white")"
         return allCardName
     }
     
@@ -116,7 +116,6 @@ class PasiansSpiderGameScene: SKScene {
             for j in 0..<numberOfCards {
                 // Check if deck has enough cards
                 guard !deck.isEmpty else {
-                    print("Error: Deck is empty. Not enough cards to deal.")
                     return
                 }
 

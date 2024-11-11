@@ -15,6 +15,10 @@ struct ContentView: View {
     @State var dailyBonusVisible = false
     @State var takedBonus = false
     
+    @State var shopContentVisible = false
+    @StateObject var shopManager = ShopManager()
+    @State var selectedSkinCards = ""
+    
     @State var balance = 0
     
     var body: some View {
@@ -104,9 +108,9 @@ struct ContentView: View {
                         }
                         
                         Button {
-                            alertTitle = "Store available soon!"
-                            alertMessage = "Store will be available soon in new updates of game! In store you can buy new skins for cards!"
-                            alertVisible = true
+                            withAnimation(.easeInOut) {
+                                shopContentVisible = true
+                            }
                         } label: {
                             Image("shop_btn")
                                 .resizable()
@@ -174,6 +178,10 @@ struct ContentView: View {
                 if dailyBonusVisible {
                     dailyBonusContent
                 }
+                
+                if shopContentVisible {
+                    shopContent
+                }
             }
             .background(
                 Image("main_background")
@@ -186,6 +194,11 @@ struct ContentView: View {
                 musicState = UserDefaults.standard.bool(forKey: "music_state")
                 soundState = UserDefaults.standard.bool(forKey: "sound_state")
                 balance = UserDefaults.standard.integer(forKey: "balance")
+                
+                if (UserDefaults.standard.string(forKey: "cards_skin") ?? "").isEmpty {
+                    UserDefaults.standard.set("white", forKey: "cards_skin")
+                }
+                selectedSkinCards = UserDefaults.standard.string(forKey: "cards_skin") ?? "white"
             }
             .onChange(of: musicState) {
                 UserDefaults.standard.set($0, forKey: "music_state")
@@ -251,6 +264,90 @@ struct ContentView: View {
                 .opacity(0.7)
                 .ignoresSafeArea()
         )
+    }
+    
+    private var shopContent: some View {
+        ZStack {
+            VStack {
+                Image("shop_title")
+                    .resizable()
+                    .frame(width: 350, height: 170)
+                Spacer()
+            }
+            HStack {
+                ForEach(shopManager.allItems, id: \.self) { item in
+                    ZStack {
+                        Image(item)
+                            .resizable()
+                            .frame(width: 250, height: 150)
+                        if selectedSkinCards == getSkinFromName(n: item) {
+                            ZStack {
+                                Image("shop_btn_bg")
+                                    .resizable()
+                                    .frame(width: 150, height: 60)
+                                Text("SELECTED")
+                                    .font(.custom("Gidugu-Regular", size: 24))
+                                    .foregroundColor(.yellow)
+                            }
+                            .offset(y: 90)
+                        } else {
+                            if shopManager.purchasedItems.contains(ShopItem.getItemFromName(name: item)) {
+                                Button {
+                                    let cardName = getSkinFromName(n: item)
+                                    selectedSkinCards = cardName
+                                    UserDefaults.standard.set(cardName, forKey: "cards_skin")
+                                } label: {
+                                    ZStack {
+                                        Image("shop_btn_bg")
+                                            .resizable()
+                                            .frame(width: 150, height: 60)
+                                        Text("SELECT")
+                                            .font(.custom("Gidugu-Regular", size: 24))
+                                            .foregroundColor(.yellow)
+                                    }
+                                }
+                                .offset(y: 90)
+                            } else {
+                                Button {
+                                    let result = shopManager.purchaseItem(ShopItem.getItemFromName(name: item), withBalance: &balance)
+                                    if !result {
+                                        alertTitle = "Error purchase!"
+                                        alertMessage = "You don't have enought coins to buy this skin! If you have 0 coins you can claim 500 coins for free by clicking on the plus button near of your balance and buy this skin."
+                                        alertVisible = true
+                                    } else {
+                                        alertTitle = "Success!"
+                                        alertMessage = "You've bought skin successfully!"
+                                        alertVisible = true
+                                    }
+                                } label: {
+                                    ZStack {
+                                        Image("shop_btn_bg")
+                                            .resizable()
+                                            .frame(width: 150, height: 60)
+                                        Text("BUY")
+                                            .font(.custom("Gidugu-Regular", size: 24))
+                                            .foregroundColor(.yellow)
+                                    }
+                                }
+                                .offset(y: 90)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .background(
+            Rectangle()
+                .fill(.black)
+                .opacity(0.7)
+                .ignoresSafeArea()
+        )
+    }
+    
+    private func getSkinFromName(n: String) -> String {
+        let comp = n.components(separatedBy: "_")
+        return comp[0]
     }
     
 }
