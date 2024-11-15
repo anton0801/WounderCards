@@ -132,6 +132,14 @@ struct ContentView: View {
                             Button {
                                 if balance <= 0 {
                                     balance = 500
+                                    alertTitle = "Claim success!"
+                                    alertMessage = "To you balance added 500 coins!"
+                                    UserDefaults.standard.set(500, forKey: "balance")
+                                    alertVisible = true
+                                } else {
+                                    alertTitle = "Error claim!"
+                                    alertMessage = "To claim free 500 coins you need to have 0 coins."
+                                    alertVisible = true
                                 }
                             } label: {
                                 Image("plus")
@@ -272,6 +280,23 @@ struct ContentView: View {
                 Image("shop_title")
                     .resizable()
                     .frame(width: 350, height: 170)
+                Spacer()
+            }
+            VStack {
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        withAnimation(.linear) {
+                            shopContentVisible = false
+                        }
+                    } label: {
+                        Image("close")
+                            .resizable()
+                            .frame(width: 52, height: 52)
+                    }
+                }
+                .padding()
                 Spacer()
             }
             HStack {

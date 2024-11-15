@@ -6,5 +6,40 @@
 	<array>
 		<string>Gidugu-Regular.ttf</string>
 	</array>
+    
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>processing</string>
+        <string>remote-notification</string>
+    </array>
+    
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>wonderstreak</string>
+            </array>
+        </dict>
+    </array>
+    
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+    
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.dsmadkjas.dnsajkdas.backgroundProccess</string>
+    </array>
+    
+    <key>NSCameraUsageDescription</key>
+    <string>Let access camera to this app.</string>
+    <key>NSUserNotificationUsageDescription</key>
+    <string>We use notifications to inform our users of updates and upcoming events.</string>
 </dict>
 </plist>

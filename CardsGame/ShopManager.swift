@@ -3,17 +3,21 @@ import Foundation
 enum ShopItem: String {
     case skinA
     case skinB
+    case skinC
     
     var price: Int {
         switch self {
-        case .skinA: return 100
-        case .skinB: return 200
+        case .skinA: return 250
+        case .skinC: return 200
+        case .skinB: return 250
         }
     }
     
     static func getItemFromName(name: String) -> ShopItem {
         if name == "skin1_shop" {
             return .skinA
+        } else if name == "skin3_shop" {
+            return .skinC
         }
         return .skinB
     }
@@ -30,7 +34,8 @@ class ShopManager: ObservableObject {
     
     var allItems = [
         "skin1_shop",
-        "skin2_shop"
+        "skin3_shop",
+        "skin2_shop",
     ]
     // Set to store purchased items
     @Published var purchasedItems: Set<ShopItem> = []

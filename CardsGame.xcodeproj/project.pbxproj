@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EED200AA2CE6AA6C009981C6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EED200A92CE6AA6C009981C6 /* FirebaseAnalytics */; };
+		EED200AC2CE6AA6C009981C6 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = EED200AB2CE6AA6C009981C6 /* FirebaseMessaging */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EEE4C6412CDBAC8800520610 /* CardsGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardsGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EED200AC2CE6AA6C009981C6 /* FirebaseMessaging in Frameworks */,
+				EED200AA2CE6AA6C009981C6 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = CardsGame;
 			packageProductDependencies = (
+				EED200A92CE6AA6C009981C6 /* FirebaseAnalytics */,
+				EED200AB2CE6AA6C009981C6 /* FirebaseMessaging */,
 			);
 			productName = CardsGame;
 			productReference = EEE4C6412CDBAC8800520610 /* CardsGame.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = EEE4C6382CDBAC8800520610;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EED200A82CE6AA6C009981C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EEE4C6422CDBAC8800520610 /* Products */;
 			projectDirPath = "";
@@ -347,6 +359,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EED200A82CE6AA6C009981C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EED200A92CE6AA6C009981C6 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EED200A82CE6AA6C009981C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EED200AB2CE6AA6C009981C6 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EED200A82CE6AA6C009981C6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EEE4C6392CDBAC8800520610 /* Project object */;
 }

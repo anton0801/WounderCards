@@ -1,7 +1,22 @@
 import SwiftUI
 import SpriteKit
 
-// MARK: Сделать Loss (если расскладывается пасьянс более 100 ходов тогда проигрышь), сделай daily rewards, menu с 2 заблоканами играми и типа их надо открыть
+struct GameItem: Codable {
+    var id: Int
+    var name: String
+    var icon: Int
+    var price_coins: Int
+}
+
+struct AllGamesDataRes: Codable {
+    let userId: String
+    let response: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case userId = "client_id"
+        case response
+    }
+}
 
 struct PasiansGameVIew: View {
     

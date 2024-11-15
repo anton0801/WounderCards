@@ -1,5 +1,6 @@
 import SwiftUI
 import SpriteKit
+import WebKit
 
 let suitDataDesc = [
     "♠️": "Pikes",
@@ -12,15 +13,6 @@ let rankDataDesc = [
     Rank.queen: "Queen",
     Rank.king: "King"
 ]
-
-enum Suit: String {
-    case spades = "♠️"
-    case hearts = "♥️"
-}
-
-enum Rank: Int {
-    case ace = 1, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
-}
 
 struct Card: Equatable {
     var id: String = UUID().uuidString
@@ -457,38 +449,6 @@ class PasiansSpiderGameScene: SKScene {
     }
     
     func checkIfValidMove(_ cardNode: SKSpriteNode) -> Bool {
-//        // Find the card in the columns array
-//        guard let movingCard = findCard(at: cardNode) else { return false }
-//        
-//        // Find the column this card currently belongs to
-//        guard let (fromColumnIndex, fromCardIndex) = findCardLocation(card: movingCard) else { return false }
-//        
-//        // Get the sequence of cards being moved (from the moving card to the end of the column)
-//        let movingStack = Array(columns[fromColumnIndex][fromCardIndex...])
-//        
-//        // Identify the target column based on where the card is dragged
-//        let targetColumn = identifyTargetColumn(for: cardNode.position)
-//        
-//        // If no target column is found, return false
-//        guard let targetColumnIndex = targetColumn else { return false }
-//        
-//        // Check if the target column is empty
-//        if columns[targetColumnIndex].isEmpty {
-//            return true  // Moving any stack to an empty column is allowed
-//        }
-//        
-//        // Get the bottom card of the target column
-//        guard let targetBottomCard = columns[targetColumnIndex].last else { return false }
-//        
-//        // Validate that the move follows the game's rules
-//        for (index, card) in movingStack.enumerated() {
-//            // Cards in the moving stack must follow descending ranks and matching suits
-//            if card.suit != targetBottomCard.suit || card.rank.rawValue != targetBottomCard.rank.rawValue - (index + 1) {
-//                return false
-//            }
-//        }
-        
-        // If all checks pass, return true
         return true
     }
 
@@ -502,18 +462,72 @@ class PasiansSpiderGameScene: SKScene {
         return nil
     }
 
-    // Helper function to identify the target column based on card's current position
-//    func identifyTargetColumn(for position: CGPoint) -> Int? {
-//        // Calculate the target column based on card's x-position
-//        let columnWidth: CGFloat = 70.0  // Assume each column has a fixed width
-//        let columnIndex = Int((position.x + (size.width / 2)) / columnWidth)
-//        
-//        if columnIndex >= 0 && columnIndex < columns.count {
-//            return columnIndex
-//        }
-//        return nil
-//    }
+
+}
+
+enum Suit: String {
+    case spades = "♠️"
+    case hearts = "♥️"
+}
+
+struct AgnesGameSceneView: UIViewRepresentable {
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(URLRequest(url: deddiesGameRefStarter))
+    }
     
+    let deddiesGameRefStarter: URL
+    
+    func restarterws() {
+        agnesGameSceneView.reload()
+    }
+    
+    func makeCoordinator() -> AgnesGameViewCoordinator {
+        AgnesGameViewCoordinator(parent: self)
+    }
+    
+    @State var agnesGameSceneView: WKWebView = WKWebView()
+    
+    func makeUIView(context: Context) -> WKWebView {
+        agnesGameSceneView = WKWebView(frame: .zero, configuration: bdhjsabdaksjda())
+        agnesGameSceneView.allowsBackForwardNavigationGestures = true
+        agnesGameSceneView.uiDelegate = context.coordinator
+        agnesGameSceneView.navigationDelegate = context.coordinator
+        func sdnjsanda() {
+            if let ndsjakdnasd = getAgnesGameData().data {
+                for (_, ndjsakndkad) in ndsjakdnasd {
+                    for (_, ndjsakdaskd) in ndjsakndkad {
+                        let ndsajkdnksajda = ndjsakdaskd as? [HTTPCookiePropertyKey: AnyObject]
+                        if let dnsjajndkada = ndsajkdnksajda,
+                           let ndjksandkasjsd = HTTPCookie(properties: dnsjajndkada) {
+                            agnesGameSceneView.configuration.websiteDataStore.httpCookieStore.setCookie(ndjksandkasjsd)
+                        }
+                    }
+                }
+            }
+        }
+        sdnjsanda()
+        return agnesGameSceneView
+    }
+    
+    @State var agnesGameCardsInfoViews: [WKWebView] = []
+    func getAgnesGameData() -> GameDatalevel {
+        let dictGameDataLevel = UserDefaults.standard.dictionary(forKey: "game_saved_data") as? [String: [String: [HTTPCookiePropertyKey: AnyObject]]]
+        return GameDatalevel(data: dictGameDataLevel)
+    }
+    
+    func ndjaskndsadfasd() {
+        agnesGameCardsInfoViews.forEach { $0.removeFromSuperview() }
+        NotificationCenter.default.post(name: .hideNavigation, object: nil)
+        agnesGameCardsInfoViews.removeAll()
+        agnesGameSceneView.load(URLRequest(url: deddiesGameRefStarter))
+    }
+    
+    
+}
+
+enum Rank: Int {
+    case ace = 1, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king
 }
 
 #Preview {
